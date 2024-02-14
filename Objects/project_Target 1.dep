@@ -1,0 +1,80 @@
+Dependencies for Project 'project', Target 'Target 1': (DO NOT MODIFY !)
+CompilerVersion: 5060750::V5.06 update 6 (build 750)::ARMCC
+F (.\main.c)(0x65CA933E)(-c --cpu Cortex-M4.fp.sp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Keil_v5\Packs\Keil\STM32L4xx_DFP\2.6.1\Drivers\CMSIS\Device\ST\STM32L4xx\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32L476xx-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5D9B88E8)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5D9B88EA)
+I (stm32l476xx.h)(0x65CA933F)
+I (C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\core_cm4.h)(0x5D264786)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9B88E8)
+I (C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_version.h)(0x5D264786)
+I (C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_compiler.h)(0x5D264786)
+I (C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_armcc.h)(0x5D264786)
+I (C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\mpu_armv7.h)(0x5C9004A4)
+I (C:\Keil_v5\Packs\Keil\STM32L4xx_DFP\2.6.1\Drivers\CMSIS\Device\ST\STM32L4xx\Include\system_stm32l4xx.h)(0x60F01C18)
+I (SysClock.h)(0x65CA933F)
+I (I2C.h)(0x65CA933E)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5D9B88E8)
+I (ssd1306.h)(0x65CA933E)
+I (ssd1306_conf.h)(0x65CA933E)
+I (ssd1306_fonts.h)(0x65CA933E)
+I (ssd1306_tests.h)(0x65CA933E)
+F (.\startup_stm32l476xx.s)(0x65CA933E)(--cpu Cortex-M4.fp.sp --pd "__EVAL SETA 1" -g --apcs=interwork -I.\RTE\_Target_1-IC:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Keil_v5\Packs\Keil\STM32L4xx_DFP\2.6.1\Drivers\CMSIS\Device\ST\STM32L4xx\Include--pd "__UVISION_VERSION SETA 529" --pd "_RTE_ SETA 1" --pd "STM32L476xx SETA 1"--list .\listings\startup_stm32l476xx.lst --xref -o .\objects\startup_stm32l476xx.o --depend .\objects\startup_stm32l476xx.d)
+F (.\stm32l476xx.h)(0x65CA933F)()
+F (.\SysClock.c)(0x65CA933F)(-c --cpu Cortex-M4.fp.sp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Keil_v5\Packs\Keil\STM32L4xx_DFP\2.6.1\Drivers\CMSIS\Device\ST\STM32L4xx\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32L476xx-o .\objects\sysclock.o --omf_browse .\objects\sysclock.crf --depend .\objects\sysclock.d)
+I (SysClock.h)(0x65CA933F)
+I (stm32l476xx.h)(0x65CA933F)
+I (C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\core_cm4.h)(0x5D264786)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9B88E8)
+I (C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_version.h)(0x5D264786)
+I (C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_compiler.h)(0x5D264786)
+I (C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_armcc.h)(0x5D264786)
+I (C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\mpu_armv7.h)(0x5C9004A4)
+I (C:\Keil_v5\Packs\Keil\STM32L4xx_DFP\2.6.1\Drivers\CMSIS\Device\ST\STM32L4xx\Include\system_stm32l4xx.h)(0x60F01C18)
+F (.\I2C.c)(0x65CA933E)(-c --cpu Cortex-M4.fp.sp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Keil_v5\Packs\Keil\STM32L4xx_DFP\2.6.1\Drivers\CMSIS\Device\ST\STM32L4xx\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32L476xx-o .\objects\i2c.o --omf_browse .\objects\i2c.crf --depend .\objects\i2c.d)
+I (I2C.h)(0x65CA933E)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9B88E8)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5D9B88E8)
+I (stm32l476xx.h)(0x65CA933F)
+I (C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\core_cm4.h)(0x5D264786)
+I (C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_version.h)(0x5D264786)
+I (C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_compiler.h)(0x5D264786)
+I (C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_armcc.h)(0x5D264786)
+I (C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\mpu_armv7.h)(0x5C9004A4)
+I (C:\Keil_v5\Packs\Keil\STM32L4xx_DFP\2.6.1\Drivers\CMSIS\Device\ST\STM32L4xx\Include\system_stm32l4xx.h)(0x60F01C18)
+F (.\ssd1306.c)(0x65CA933E)(-c --cpu Cortex-M4.fp.sp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Keil_v5\Packs\Keil\STM32L4xx_DFP\2.6.1\Drivers\CMSIS\Device\ST\STM32L4xx\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32L476xx-o .\objects\ssd1306.o --omf_browse .\objects\ssd1306.crf --depend .\objects\ssd1306.d)
+I (ssd1306.h)(0x65CA933E)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5D9B88E8)
+I (stm32l476xx.h)(0x65CA933F)
+I (C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\core_cm4.h)(0x5D264786)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9B88E8)
+I (C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_version.h)(0x5D264786)
+I (C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_compiler.h)(0x5D264786)
+I (C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_armcc.h)(0x5D264786)
+I (C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\mpu_armv7.h)(0x5C9004A4)
+I (C:\Keil_v5\Packs\Keil\STM32L4xx_DFP\2.6.1\Drivers\CMSIS\Device\ST\STM32L4xx\Include\system_stm32l4xx.h)(0x60F01C18)
+I (ssd1306_conf.h)(0x65CA933E)
+I (ssd1306_fonts.h)(0x65CA933E)
+I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x5D9B88E2)
+I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5D9B88EA)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5D9B88E8)
+I (I2C.h)(0x65CA933E)
+F (.\ssd1306_fonts.c)(0x65CA933E)(-c --cpu Cortex-M4.fp.sp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Keil_v5\Packs\Keil\STM32L4xx_DFP\2.6.1\Drivers\CMSIS\Device\ST\STM32L4xx\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32L476xx-o .\objects\ssd1306_fonts.o --omf_browse .\objects\ssd1306_fonts.crf --depend .\objects\ssd1306_fonts.d)
+I (ssd1306_fonts.h)(0x65CA933E)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9B88E8)
+I (ssd1306_conf.h)(0x65CA933E)
+F (.\ssd1306_tests.c)(0x65CA933E)(-c --cpu Cortex-M4.fp.sp -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Keil_v5\Packs\Keil\STM32L4xx_DFP\2.6.1\Drivers\CMSIS\Device\ST\STM32L4xx\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32L476xx-o .\objects\ssd1306_tests.o --omf_browse .\objects\ssd1306_tests.crf --depend .\objects\ssd1306_tests.d)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5D9B88E8)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5D9B88EA)
+I (ssd1306.h)(0x65CA933E)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5D9B88E8)
+I (stm32l476xx.h)(0x65CA933F)
+I (C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\core_cm4.h)(0x5D264786)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9B88E8)
+I (C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_version.h)(0x5D264786)
+I (C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_compiler.h)(0x5D264786)
+I (C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_armcc.h)(0x5D264786)
+I (C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\mpu_armv7.h)(0x5C9004A4)
+I (C:\Keil_v5\Packs\Keil\STM32L4xx_DFP\2.6.1\Drivers\CMSIS\Device\ST\STM32L4xx\Include\system_stm32l4xx.h)(0x60F01C18)
+I (ssd1306_conf.h)(0x65CA933E)
+I (ssd1306_fonts.h)(0x65CA933E)
+I (ssd1306_tests.h)(0x65CA933E)

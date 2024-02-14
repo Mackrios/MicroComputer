@@ -1,0 +1,17 @@
+.\objects\ssd1306.o: ssd1306.c
+.\objects\ssd1306.o: ssd1306.h
+.\objects\ssd1306.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\ssd1306.o: stm32l476xx.h
+.\objects\ssd1306.o: C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\core_cm4.h
+.\objects\ssd1306.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\ssd1306.o: C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_version.h
+.\objects\ssd1306.o: C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_compiler.h
+.\objects\ssd1306.o: C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_armcc.h
+.\objects\ssd1306.o: C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\mpu_armv7.h
+.\objects\ssd1306.o: C:\Keil_v5\Packs\Keil\STM32L4xx_DFP\2.6.1\Drivers\CMSIS\Device\ST\STM32L4xx\Include\system_stm32l4xx.h
+.\objects\ssd1306.o: ssd1306_conf.h
+.\objects\ssd1306.o: ssd1306_fonts.h
+.\objects\ssd1306.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\ssd1306.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\ssd1306.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\ssd1306.o: I2C.h
