@@ -14,10 +14,10 @@
 GPIOC->MODER &=~(0x03F003FF); // Clear bit  //IN PRE
 GPIOC->MODER |= (0x000000055);  //SETS THE BITS TO OUPUT
 unsigned char key_map [4][3] = {
-{'1', '2', '3'}, //II 1st row
-{'4', '5', '6'}, //II 2nd row
-{'7', '8', '9'}, //II 3rd row
-{'*', '0', '#'}, //II 4th row
+{'1', '2', '3','A'}, //II 1st row
+{'4', '5', '6','B'}, //II 2nd row
+{'7', '8', '9','C'}, //II 3rd row
+{'*', '0', '#','D'}, //II 4th row
 };
  }
  
@@ -27,7 +27,7 @@ unsigned char Keypad_scan() {
 
     // Check whether any key has been pressed
     // Output zeros on all row pins
-    for (row = 0; row < 4; row++) {
+    for (row = 0; row <= 3; row++) {
         // Set up the row outputs using ODR
         GPIOC->ODR = ~(1 << row);  // Assuming GPIOC is the GPIO port you are using
 
@@ -36,12 +36,19 @@ unsigned char Keypad_scan() {
 
         // Read inputs of column pins
         // Check the column inputs
-        for (col = 0; col < 3; col++) {
+        for (col = 4; col <= 12; col++) {
             // If the input from the column pin ColumnPressed is zero
             if ((GPIOC->IDR & (1 << col)) == 0) {
                 ColumnPressed = col;
             }
+            if (col == 10 && ((GPIOC->IDR & (1 << col)) == 0) )
+              ColumnPressed = col - 6 ;
+            if (col == 11 && ((GPIOC->IDR & (1 << col)) == 0) )
+              ColumnPressed = col - 7 ;
+            if (col == 12 && ((GPIOC->IDR & (1 << col)) == 0) )
+              ColumnPressed = col - 7 ;
         }
+
 
         // If inputs are 1 for all columns, then no key has been pressed
         if ((GPIOC->IDR & 0x07) == 0x07) {
@@ -54,7 +61,7 @@ unsigned char Keypad_scan() {
 
         // Read the column inputs after a short delay
         // Check the column inputs
-        for (volatile int i = 0; i < 1000; i++);  // Adjust the delay as needed
+        for (int i = 0; i < 1000; i++);  // Adjust the delay as needed
 
         if ((GPIOC->IDR & (1 << ColumnPressed)) == 0) {
             key = key_map[row][ColumnPressed];

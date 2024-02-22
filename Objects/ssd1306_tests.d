@@ -1,16 +1,12 @@
-.\objects\ssd1306_tests.o: ssd1306_tests.c
-.\objects\ssd1306_tests.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
-.\objects\ssd1306_tests.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\ssd1306_tests.o: ssd1306.h
-.\objects\ssd1306_tests.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
-.\objects\ssd1306_tests.o: stm32l476xx.h
-.\objects\ssd1306_tests.o: C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\core_cm4.h
-.\objects\ssd1306_tests.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\ssd1306_tests.o: C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_version.h
-.\objects\ssd1306_tests.o: C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_compiler.h
-.\objects\ssd1306_tests.o: C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_armcc.h
-.\objects\ssd1306_tests.o: C:\Keil_v5\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\mpu_armv7.h
-.\objects\ssd1306_tests.o: C:\Keil_v5\Packs\Keil\STM32L4xx_DFP\2.6.1\Drivers\CMSIS\Device\ST\STM32L4xx\Include\system_stm32l4xx.h
-.\objects\ssd1306_tests.o: ssd1306_conf.h
-.\objects\ssd1306_tests.o: ssd1306_fonts.h
-.\objects\ssd1306_tests.o: ssd1306_tests.h
+./objects/ssd1306_tests.o: ssd1306_tests.c \
+  C:\Keil_v5\ARM\ARMCLANG\include\string.h \
+  C:\Keil_v5\ARM\ARMCLANG\include\stdio.h ssd1306.h \
+  C:\Keil_v5\ARM\ARMCLANG\include\stddef.h stm32l476xx.h \
+  C:\Users\mackr\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\core_cm4.h \
+  C:\Keil_v5\ARM\ARMCLANG\include\stdint.h \
+  C:\Users\mackr\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_version.h \
+  C:\Users\mackr\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_compiler.h \
+  C:\Users\mackr\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_armclang.h \
+  C:\Users\mackr\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\mpu_armv7.h \
+  C:\Users\mackr\AppData\Local\Arm\Packs\Keil\STM32L4xx_DFP\2.6.2\Drivers\CMSIS\Device\ST\STM32L4xx\Include\system_stm32l4xx.h \
+  ssd1306_conf.h ssd1306_fonts.h ssd1306_tests.h
