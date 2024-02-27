@@ -84,6 +84,11 @@ GPIOC->MODER |= (0x000000055);  //SETS THE BITS TO OUPUT
 //
 // GPIOC->OTYPER &= ~(0x00001F1F); //OUTPUT TYPE REGISTER    IN PRE
 
+	//there needs to be a check right here
+	// to check for No input 
+	// so we are not just outputing grabage 
+	
+	
 	volatile int i;
 	int count = 0;
 	char message[SIZE];
