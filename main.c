@@ -6,20 +6,25 @@
 #include "ssd1306.h"
 #include "ssd1306_tests.h"
  int SIZE = 60 ;
+
  void  Keypad_Pin_Init()
  {
     RCC->AHB2ENR |= RCC_AHB2ENR_GPIOCEN;  
 
+
 // MODE: 00: Input mode, 01: General purpose output mode
   //       10: Alternate function mode, 11: Analog mode (reset state)
+
 
     GPIOC->MODER &=~(0x03F003FF); // Clear bit  //IN PRE
     GPIOC->MODER |= (0x000000055);  //SETS THE BITS TO OUPUT
     GPIOC->PUPDR &=~(0x03F003FF);
+
  }
  
 unsigned char keypad_scan (void) 
 {
+
     unsigned char key_map [4][4] = {
     {'1', '2', '3','A'}, //II 1st row
     {'4', '5', '6','B'}, //II 2nd row
@@ -78,11 +83,13 @@ unsigned char keypad_scan (void)
     }
     // Wait until the key is released
     return 0xFF;
+
 }
 
 int main(void){
 System_Clock_Init(); // Switch System Clock = 80 MHz
 unsigned char key,previous_key;
+
     char message[64] = "";
     unsigned char len = 0;
     int i;
@@ -126,116 +133,4 @@ key = keypad_scan();
         ssd1306_UpdateScreen();
     }
 }
-
-
-
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	
-//	
-//int main(void){
-//	volatile int i;
-//	int count = 0;
-//	char message[64]="";
-//	
-//	System_Clock_Init(); // Switch System Clock = 80 MHz
-//	I2C_GPIO_init();
-//	I2C_Initialization(I2C1);
-
-//	ssd1306_Init();
-//	
-//	while(1){
-//		for(i=0; i<100000; i++);
-//		sprintf(message, "%d", count);
-//		ssd1306_Fill(White);
-//		ssd1306_SetCursor(2,0);
-//		ssd1306_WriteString(message, Font_11x18, Black);
-//		ssd1306_UpdateScreen();	
-//		count++;
-//	}
-//}
 
