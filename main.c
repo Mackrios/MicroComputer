@@ -14,6 +14,7 @@
 
 GPIOC->MODER &=~(0x03F003FF); // Clear bit  //IN PRE
 GPIOC->MODER |= (0x000000055);  //SETS THE BITS TO OUPUT
+GPIOC->PUPDR &=~(0x03F003FF);
  }
  
 unsigned char keypad_scan (void) {
@@ -33,20 +34,21 @@ for (Col = 0; Col <= 4; Col++)
     inputMask = 1<<cols [Col];
 
 for (row = 0;row < 4; row++)
-    outputMask |= 1<<rows [row];
+    outputMask = 1<<rows [row];
 
 // Check whether any key has been pressed
 // 1. Output zeros on all row pins
 // 2. Delay briefly,and read inputs of column pins
 // 3. If inputs are 1 for all columns, then no key has been pressed
 
- GPIOC ->ODR &= ~outputMask;
+ //GPIOC ->ODR &= ~outputMask;
+ GPIOC ->ODR &= (0x0); 
     for(volatile int i=0; i<100000; i++);
 if ((GPIOC->IDR & inputMask) == inputMask) // If no key is pressed, return exi 
      return (0xFF);
 
 // Identify the column of the key pressed
-for (Col = 0; Col < 3; Col++) { // CoLumn scan
+for (Col = 0; Col < 4; Col++) { // CoLumn scan
     if ( (GPIOC->IDR & (1<<cols[Col])) == 0 )
 ColumnPressed = Col;
 }
@@ -54,15 +56,21 @@ ColumnPressed = Col;
 // Identify the row of the key pressed
 for (row = 0; row < 4; row++) {// Row scan
     // Set up the row outputs
-    GPIOC->ODR|= outputMask;
-    GPIOC->ODR &= ~ (1<<rows [row]) ;
-
+		GPIOC->ODR &= (0x0) ;
+    GPIOC->ODR|= (1<< cols[Col]) ;
+   for(volatile int i=0; i<10000; i++);
+	
+ int read = (GPIOC ->IDR &= ~(1UL << cols[Col]));
+	
+		if ((read & (1UL << ColumnPressed))== 0){
+			key = key_map [row] [ColumnPressed];
+			continue ;}
 // Read the column inputs after a short delay
-	for(volatile int i=0; i<100000; i++);
+	
 // If the input from the column pin CoLumnPressed is zero
-if ((GPIOC->IDR & (1 << ColumnPressed)) == 0) {
-key = key_map [row] [ColumnPressed];
-    }
+//if ((GPIOC->IDR & (1 << ColumnPressed)) == 0) {
+//key = key_map [row] [ColumnPressed];
+    //}
 }
 // Wait until the key is released
 return key;
@@ -84,11 +92,6 @@ GPIOC->MODER |= (0x000000055);  //SETS THE BITS TO OUPUT
 //
 // GPIOC->OTYPER &= ~(0x00001F1F); //OUTPUT TYPE REGISTER    IN PRE
 
-	//there needs to be a check right here
-	// to check for No input 
-	// so we are not just outputing grabage 
-	
-	
 	volatile int i;
 	int count = 0;
 	char message[SIZE];
@@ -107,6 +110,8 @@ GPIOC->MODER |= (0x000000055);  //SETS THE BITS TO OUPUT
   		count++;
   	}
   }
+
+
 
 
 	
