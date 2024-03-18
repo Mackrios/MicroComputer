@@ -48,7 +48,7 @@ if ((GPIOC->IDR & inputMask) == inputMask) // If no key is pressed, return exi
 // Identify the column of the key pressed
 for (Col = 0; Col < 3; Col++) { // CoLumn scan
     if ( (GPIOC->IDR & (1<<cols[Col])) == 0 )
-ColumnPressed = Col;
+	ColumnPressed = Col;
 }
 
 // Identify the row of the key pressed
@@ -180,40 +180,4 @@ GPIOC->MODER |= (0x000000055);  //SETS THE BITS TO OUPUT
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	
-//	
-//int main(void){
-//	volatile int i;
-//	int count = 0;
-//	char message[64]="";
-//	
-//	System_Clock_Init(); // Switch System Clock = 80 MHz
-//	I2C_GPIO_init();
-//	I2C_Initialization(I2C1);
-
-//	ssd1306_Init();
-//	
-//	while(1){
-//		for(i=0; i<100000; i++);
-//		sprintf(message, "%d", count);
-//		ssd1306_Fill(White);
-//		ssd1306_SetCursor(2,0);
-//		ssd1306_WriteString(message, Font_11x18, Black);
-//		ssd1306_UpdateScreen();	
-//		count++;
-//	}
-//}
 
