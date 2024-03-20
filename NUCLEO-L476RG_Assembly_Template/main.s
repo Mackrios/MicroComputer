@@ -26,12 +26,14 @@ BUTTON_PIN EQU 13
 
 __main  PROC
 
+    ; Initialize system clock
+
     ; Enable the clock to GPIO Port A    
     LDR r0, =RCC_BASE
     LDR r1, [r0, #RCC_AHB2ENR]
     ORR r1, r1, #RCC_AHB2ENR_GPIOAEN
     STR r1, [r0, #RCC_AHB2ENR]
-    
+
     ; MODE: 00 - Input mode, 01 - General-purpose output mode
     ;       10 - Alternate function mode, 11 - Analog mode (reset state)
     LDR r0, =GPIOA_BASE
@@ -57,32 +59,46 @@ __main  PROC
     BIC r1, r1, #(3<<(2*BUTTON_PIN)) ; Clear bits for Pin 13
     STR r1, [r0, #GPIO_PUPDR]
 
-    ; Turn on the green LED (Assuming 1 indicates turning on)
-    LDR r1, [r0, #GPIO_ODR]
-    ORR r1, r1, #(1<<LED_PIN)
-    STR r1, [r0, #GPIO_ODR]
+    ; Initialize LED state to off
+    MOV r2, #0                      ; r2: led state, initially off
 
 while_loop
-    ; Check if Pin 13 is high (button pressed)
-    LDR r1, [r0, #GPIO_IDR]
-    TST r1, #(1<<BUTTON_PIN)   ; Test bit for Pin 13
-    BEQ while_loop             ; Branch if Pin 13 is low
+    ; Check if Pin 13 is low (button pressed)
+    LDR r1, =GPIOC_BASE
+    LDR r0, [r1, #GPIO_IDR]
+    TST r0, #(1 << BUTTON_PIN)   ; Test bit for Pin 13
+    BEQ button_pressed            ; If button is pressed, skip LED toggle
 
-    ; Check the state of Pin 5 (assuming 1 means LED is on)
-    LDR r1, [r0, #GPIO_ODR]
-    TST r1, #(1<<LED_PIN)      ; Test bit for Pin 5
-    CMP r1, #(1<<LED_PIN)      ; Compare bit for Pin 5
-    MOVNE r2, #1               ; If not equal, set 'pressed' to 1
-    MOVEQ r2, #0               ; If equal, set 'pressed' to 0
-	LDR r3, =pressed_offset      ; Load the address of pressed_offset into r3
-	STR r2, [r0, r3]             ; Update the 'pressed' variable
+    ; Turn off the LED only if it was previously on and button is pressed
+    CMP r2, #1                    ; Check if LED is on
+    BNE button_not_pressed        ; Skip if LED is off
+    B button_pressed
 
+button_not_pressed
+    B while_loop
 
+button_pressed
+    ; Toggle the LED state
+    LDR r1, =GPIOA_BASE
+    LDR r0, [r1, #GPIO_ODR]
+    EOR r0, r0, #(1 << LED_PIN)
+    STR r0, [r1, #GPIO_ODR]
 
+    ; Update the LED state
+    CMP r2, #0
+    MOVNE r2, #0                   ; r2: led state, turned off if previously on
+    MOVEQ r2, #1                   ; r2: led state, turned on if previously off
+    B wait_for_release
 
-    B while_loop             ; Repeat the loop
+wait_for_release
+    ; Wait for the button to be released
+    LDR r0, [r1, #GPIO_IDR]
+    TST r0, #(1 << BUTTON_PIN)   ; Test bit for Pin 13
+    BEQ while_loop
 
-stop    B   stop                ; dead loop & program hangs here
+    B wait_for_release
+
+stop    B   stop                  ; Dead loop & program hangs here
 
     ENDP
 
