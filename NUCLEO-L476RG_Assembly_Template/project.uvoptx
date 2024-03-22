@@ -152,9 +152,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>61</LineNumber>
+          <LineNumber>56</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134218322</Address>
+          <Address>134218326</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -163,23 +163,71 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\main.s</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\project\main.s\61</Expression>
+          <Expression>\\project\main.s\56</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>72</LineNumber>
+          <LineNumber>69</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
+          <Address>134218340</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
+          <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\main.s</Filename>
           <ExecCommand></ExecCommand>
-          <Expression></Expression>
+          <Expression>\\project\main.s\69</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>80</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134218356</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>.\main.s</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\project\main.s\80</Expression>
+        </Bp>
+        <Bp>
+          <Number>3</Number>
+          <Type>0</Type>
+          <LineNumber>87</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134218368</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>.\main.s</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\project\main.s\87</Expression>
+        </Bp>
+        <Bp>
+          <Number>4</Number>
+          <Type>0</Type>
+          <LineNumber>123</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134218418</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>.\main.s</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\project\main.s\123</Expression>
         </Bp>
       </Breakpoint>
       <Tracepoint>
