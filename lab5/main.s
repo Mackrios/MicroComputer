@@ -6,11 +6,41 @@
 ; Green LED <--> PA.5, Button <--> PC.13
 LED_PIN EQU 5
 BUTTON_PIN EQU 13
+MOTOR_1A_PIN EQU 2
+MOTOR_2A_PIN EQU 3
+MOTOR_3A_PIN EQU 1
+MOTOR_4A_PIN EQU 0
 
 ; Define Code Section
 	AREA main, CODE, READONLY
 	EXPORT __main              ; make __main visible to linker
-	ENTRY           
+
+; Subroutine to rotate the stepper motor clockwise
+_motor_clockwise PROC
+	push {LR} 
+    LDR r1, =FullStep      ; Load the address of the FullStep array
+    MOV r2, #12            ; Set the number of steps (12 steps x 15° per step = 180°)
+
+rotate_step_loop
+    LDR r3, [r1], #4       ; Load the next full step sequence from the FullStep array
+    BL delay               ; Call the delay subroutine
+    STR r3, [r0, #GPIO_ODR] ; Set the GPIO output data register with the step sequence
+    SUBS r2, r2, #1        ; Decrement the step count
+    BNE rotate_step_loop   ; Repeat until all steps are completed
+	pop {LR} 
+    BX LR                  ; Return from subroutine
+	ENDP
+
+; Subroutine to introduce a delay
+delay PROC
+    MOV r4, #3000          ; Set the delay value
+delay_loop
+    SUBS r4, r4, #1        ; Decrement the delay counter
+    BNE delay_loop         ; Repeat until the delay counter reaches zero
+    BX LR                  ; Return from subroutine
+	ENDP
+
+ENTRY           
 
 __main  PROC
 
@@ -50,77 +80,72 @@ __main  PROC
     BIC r1, r1, #(3<<(2*BUTTON_PIN)) ; Clear bits for Pin 13
     STR r1, [r0, #GPIO_PUPDR]
 
-    ; Define Full Step Sequence
-FullStep  DCD 0x9, 0xA, 0x6, 0x5      ; Full step sequence
+    ; Set Pin 5 of Port A with no pull-up, no pull-down
+    ; Configure Pin 5 of Port A with no pull-up or pull-down
+    LDR r0, =GPIOA_BASE
+    LDR r1, [r0, #GPIO_PUPDR]
+    BIC r1, r1, #(3<<(2*LED_PIN)) ; Clear bits for Pin 5
+    STR r1, [r0, #GPIO_PUPDR]
 
-    ; Rotate Clockwise
-	MOV r3, #48                  ; Number of steps (48 steps × 7.5° per step = 360°)
-rotate_clockwise
-    LDR r2, =FullStep            ; Load Full Step sequence
-    LDR r1, [r2], #4             ; Load current step
-    MOV r0, #3                   ; Counter for FullStep array index
-loop_clockwise
-    AND r4, r1, #0x8             ; Extract Winding A value
-    LSR r4, r4, #3               ; Shift to get the actual value
-    AND r5, r1, #0x4             ; Extract Winding A value
-    LSR r5, r5, #2               ; Shift to get the actual value
-    AND r6, r1, #0x2             ; Extract Winding B value
-    LSR r6, r6, #1               ; Shift to get the actual value
-    AND r7, r1, #0x1             ; Extract Winding B value
-    STR r4, [r0, #GPIO_ODR]  ; Set Winding A
-    STR r5, [r0, #GPIO_ODR]  ; Set Winding A
-    STR r6, [r1, #GPIO_ODR]  ; Set Winding B
-    STR r7, [r1, #GPIO_ODR]  ; Set Winding B
-    MOV r4, #6000                ; Delay
-delay_loop_clockwise
-    SUBS r4, r4, #1
-    BNE delay_loop_clockwise
-    SUBS r0, r0, #1
-    BPL loop_clockwise
-    SUBS r3, r3, #1
-    BNE rotate_clockwise
+    ; Set Pin 13 of Port C with pull-up
+    ; Configure Pin 13 of Port C with pull-up
+    LDR r0, =GPIOC_BASE
+    LDR r1, [r0, #GPIO_PUPDR]
+    ORR r1, r1, #(1<<(2*BUTTON_PIN)) ; Set pull-up for Pin 13
+    STR r1, [r0, #GPIO_PUPDR]
 
-    ; Check Button State
-    LDR r0, =GPIOC_BASE          ; Load GPIOC base address
-    LDR r1, [r0, #GPIO_IDR]      ; Read input data register
-    TST r1, #(1 << BUTTON_PIN)   ; Test button state
-    BEQ rotate_clockwise         ; If button is pressed, rotate clockwise
-    B rotate_counterclockwise    ; Otherwise, rotate counterclockwise
+    ; Set Pin 5 of Port A as push-pull output
+    ; Configure Pin 5 of Port A as push-pull output
+    LDR r0, =GPIOA_BASE
+    LDR r1, [r0, #GPIO_OTYPER]
+    BIC r1, r1, #(1<<LED_PIN) ; Clear bit for Pin 5
+    STR r1, [r0, #GPIO_OTYPER]
 
-    ; Rotate Counterclockwise
-    MOV r3, #48                  ; Number of steps (48 steps × 7.5° per step = 360°)
-rotate_counterclockwise
-    LDR r2, =FullStep            ; Load Full Step sequence
-    LDR r1, [r2, #12]            ; Load current step
-    MOV r0, #3                   ; Counter for FullStep array index
-loop_counterclockwise
-    AND r4, r1, #0x8             ; Extract Winding A value
-    LSR r4, r4, #3               ; Shift to get the actual value
-    AND r5, r1, #0x4             ; Extract Winding A value
-    LSR r5, r5, #2               ; Shift to get the actual value
-    AND r6, r1, #0x2             ; Extract Winding B value
-    LSR r6, r6, #1               ; Shift to get the actual value
-    AND r7, r1, #0x1             ; Extract Winding B value
-    STR r4, [r0, #GPIO_ODR]  ; Set Winding A
-    STR r5, [r0, #GPIO_ODR]  ; Set Winding A
-    STR r6, [r1, #GPIO_ODR]  ; Set Winding B
-    STR r7, [r1, #GPIO_ODR]  ; Set Winding B
-    MOV r4, #6000                ; Delay
-delay_loop_counterclockwise
-    SUBS r4, r4, #1
-    BNE delay_loop_counterclockwise
-    SUBS r0, r0, #1
-    BPL loop_counterclockwise
-    SUBS r3, r3, #1
-    BNE rotate_counterclockwise
+    ; Set Motor Driver Inputs
+    LDR r0, =GPIOC_BASE
+    LDR r1, [r0, #GPIO_MODER]
+    BIC r1, r1, #(3<<(2*MOTOR_1A_PIN))  ; Configure Pin PC2 as output
+    BIC r1, r1, #(3<<(2*MOTOR_2A_PIN))  ; Configure Pin PC3 as output
+    BIC r1, r1, #(3<<(2*MOTOR_3A_PIN))  ; Configure Pin PC1 as output
+    BIC r1, r1, #(3<<(2*MOTOR_4A_PIN))  ; Configure Pin PC0 as output
+    ORR r1, r1, #(1<<(2*MOTOR_1A_PIN))  ; Set Pin PC2 as output
+    ORR r1, r1, #(1<<(2*MOTOR_2A_PIN))  ; Set Pin PC3 as output
+    ORR r1, r1, #(1<<(2*MOTOR_3A_PIN))  ; Set Pin PC1 as output
+    ORR r1, r1, #(1<<(2*MOTOR_4A_PIN))  ; Set Pin PC0 as output
+    STR r1, [r0, #GPIO_MODER]
 
-    ENDP
+    ; Set Pin 5 of Port A with low speed
+    ; Configure Pin 5 of Port A with low speed
+    LDR r0, =GPIOA_BASE
+    LDR r1, [r0, #GPIO_OSPEEDR]
+    BIC r1, r1, #(3<<(2*LED_PIN)) ; Clear bits for Pin 5
+    STR r1, [r0, #GPIO_OSPEEDR]
 
-; Define Data Section
-	AREA myData, DATA, READWRITE
-	ALIGN
+    ; Set Pin 13 of Port C with low speed
+    ; Configure Pin 13 of Port C with low speed
+    LDR r0, =GPIOC_BASE
+    LDR r1, [r0, #GPIO_OSPEEDR]
+    BIC r1, r1, #(3<<(2*BUTTON_PIN)) ; Clear bits for Pin 13
+    STR r1, [r0, #GPIO_OSPEEDR]
 
-array   DCD 1, 2, 3, 4            ; Define an array of 4 integers
+main_loop
+    ; Call the subroutine to rotate the stepper motor clockwise
+    BL _motor_clockwise
+
+    ; Infinite loop to keep the program running
+
+    B main_loop
+	
+    ALIGN
+
+    ; Define Data Section
+    AREA myData, DATA, READWRITE
+    ALIGN
+
 pressed_offset DCD 0               ; Variable to store the button state
 
-	END
+; Define Full Step Sequence
+FullStep  DCD 0x9, 0xA, 0x6, 0x5      ; Full step sequence
+
+
+    END
