@@ -12,88 +12,21 @@
 #define SENSOR_PIN_3  12
 #define SENSOR_PIN_4  14
 #define BUTTON_PIN 		13
-
+int threshold[3] ; 
 int sensor_pin_map[] = {SENSOR_PIN_1,SENSOR_PIN_2,SENSOR_PIN_3,SENSOR_PIN_4} ;
-int calb_low[4];
-int calb_high[4];
+int calb_low[3];
+int calb_high[3];
 volatile int finail_data_sensor[4];
 volatile int black = 0 , white = 0 ;
-
+int data[3];
+int left = 0;
+int middle = 0;
+int right = 0;
 void delayMicroseconds(uint32_t us) {
     for (int i = 0; i < us * 6; ++i) {
         __NOP(); // No operation, compiler intrinsic to introduce a delay
     }
 }
-
-/*
-///////////////////////////////////////////////
-///////////////////////////////////////////////
-beggning of the motor instization/functions
-*//////////////////////////////////////////////
-void motor_instiazation(){
-int mask = 0x330F;
-int set = 0x1105;
-	
-	RCC->AHB2ENR |= RCC_AHB2ENR_GPIOAEN ; 
-	
-	GPIOA->MODER =GPIOA->MODER &~ mask | set;
-	GPIOA->PUPDR &= ~(0x505);
-}
-
-void motor_left(){
-	GPIOA->ODR = GPIOA->ODR| 0x10; 
-}
-
-void motor_right(){
-GPIOA->ODR = GPIOA->ODR| 0x01;
-}
-
-void motor_forward(){
-GPIOA->ODR = GPIOA->ODR | 0x11;
-}
-
-void motor_stop(){
-GPIOA->ODR = GPIOA->ODR & (0x00);
-}
-
-void motor_back(){
-GPIOA->ODR = GPIOA->ODR| 0x42;
-}
-void motor_logic_moevemnt(){
-int i = 0 ;
-//motor_back();
-int	sensor_num = 0 ;
-if(finail_data_sensor[1]>=60){ // checking for moving foward
-	//motor_forward();
-	if (finail_data_sensor[0]<=150 && finail_data_sensor[2]<=150){     // no side line move forward 
-		//delayMicroseconds(100);
-		//motor_stop();
-		motor_forward();
-		//delayMicroseconds(100);
-		//motor_stop();
-	}
-		if (finail_data_sensor[0]>=150 && finail_data_sensor[2]<=150 ){
-			delayMicroseconds(1000);
-			motor_stop();
-//		delayMicroseconds(1000);
-		motor_left();
-//		delayMicroseconds(50);
-//		motor_stop();
-	}else if (finail_data_sensor[0]<=150 && finail_data_sensor[2]>=150 ){
-		delayMicroseconds(1000);
-		motor_stop();
-//		delayMicroseconds(50);
-		motor_right();
-//		delayMicroseconds(50);
-//		motor_stop();
-		}
-}else if(finail_data_sensor[1]<=60 && finail_data_sensor[0]<=60 && finail_data_sensor[2]<=60 ){ //checking for no line in fornt so we back up until line is found  
-	motor_stop();
-	delayMicroseconds(50);
-	motor_back();
-}
-	}
-
 /*
 ///////////////////////////////////////////////
 ///////////////////////////////////////////////
@@ -143,19 +76,95 @@ return ((GPIOC->IDR) & (0x1 << BUTTON_PIN )) == 0 ;
     // Check conditions based on sensor readings
 enum PROGRAM_STATE {
 		PROGRAM_STATE_CALB_WHITE,
-		PROGRAM_STATE_CALB_BLACK,
 		PROGRAM_STATE_RUN
 };
 
-int measruments_calbrated(int i){
-	int raw_data = measureReflectance(i);
-	int scaled_data = (raw_data - calb_low[i]) * 1000 / (calb_high[i] - calb_low[i]) ;
-		if (scaled_data < 0){return 0;}
-		if (scaled_data > 1000){return 1000;}
-		else {
-		return scaled_data ;
-		}
+/*
+///////////////////////////////////////////////
+///////////////////////////////////////////////
+beggning of the motor instization/functions
+*//////////////////////////////////////////////
+void motor_instiazation(){
+int mask = 0x330F;
+int set = 0x1105;
+	
+	RCC->AHB2ENR |= RCC_AHB2ENR_GPIOAEN ; 
+	
+	GPIOA->MODER =GPIOA->MODER &~ mask | set;
+	GPIOA->PUPDR &= ~(0x505);
 }
+
+void motor_left(){
+	GPIOA->ODR = GPIOA->ODR| 0x10; 
+}
+
+void motor_right(){
+GPIOA->ODR = GPIOA->ODR| 0x01;
+}
+
+void motor_forward(){
+GPIOA->ODR = GPIOA->ODR | 0x11;
+}
+
+void motor_stop(){
+GPIOA->ODR = GPIOA->ODR & (0x00);
+}
+
+void motor_back(){
+GPIOA->ODR = GPIOA->ODR| 0x42;
+}
+/// every movemnt is after a stop 
+void motor_logic_moevemnt(){
+	int i = 0 ;
+	for(i=0;i<3;i++){
+	data[i]= measureReflectance(i);
+	}															 
+	left = (data[0]>threshold[0]?1:0);					 //checking left
+	middle = (data[1]>threshold[1]?1:0);					//checking middle 															
+	right = (data[2]>threshold[2]?1:0);					//checking right 
+
+if (middle == 1 && right == 0 && left == 0 ){
+		motor_forward();
+		delayMicroseconds(500);
+		motor_stop();
+}else if  (middle == 1 && right == 1 && left == 0 ){
+		motor_right();
+		delayMicroseconds(500);
+		motor_stop();
+		motor_forward();
+		delayMicroseconds(500);
+		motor_stop();
+}else if (middle == 1 && right == 0 && left == 1 ){
+		motor_left();
+		delayMicroseconds(500);
+		motor_stop();
+		motor_forward();
+		delayMicroseconds(500);
+		motor_stop();
+}else if (middle == 0 && right == 1 && left == 0 ){
+		motor_right();
+		delayMicroseconds(500);
+		motor_stop();
+}else if (middle == 0 && right == 0 && left == 1 ){
+		motor_left();
+		delayMicroseconds(500);
+		motor_stop();
+}else if (middle == 1 && right == 1 && left == 1 ){
+		motor_forward();
+		delayMicroseconds(500);
+		motor_stop();
+}else {
+		//motor_back();
+		delayMicroseconds(400);
+		motor_stop();
+		motor_left();
+		delayMicroseconds(400);
+		motor_stop();
+		motor_right();
+		motor_stop();
+}
+}
+
 
 
 int main(void) {
@@ -173,16 +182,11 @@ int tres = 0 ;
 			if (button_pressed && ! button_pressed_last_frame){
 			switch (state){
 				case PROGRAM_STATE_CALB_WHITE:
-							for (int i = 0 ; i<4;i++){
-								calb_low[i]= measureReflectance(i);
+							for (int i = 0 ; i<3;i++){
+								calb_low[i]= (measureReflectance(i)*1.1);
+								threshold[i]=calb_low[i];
 							}
-							state   = PROGRAM_STATE_CALB_BLACK ;
-						break ;
-				case PROGRAM_STATE_CALB_BLACK:
-							for (int i = 0 ; i<4;i++){
-								calb_high[i]= measureReflectance(i);
-							}
-							state = PROGRAM_STATE_RUN ;
+							state   = PROGRAM_STATE_RUN ;
 						break ;
 				default:
 						break ;
@@ -190,12 +194,13 @@ int tres = 0 ;
 			}
 			button_pressed_last_frame = button_pressed ;
    if (state == PROGRAM_STATE_RUN){
-		 for (int i = 0;i<4;i++ ){
-					finail_data_sensor[i] = measruments_calbrated(i);
-			 		arrays[i] = finail_data_sensor[i] ;
-			 //if (i )
-					tres = measruments_calbrated(i);
-		 }
+//		 for (int i = 0;i<3;i++ ){																		/// for debugging puropses 
+//					finail_data_sensor[i] = measureReflectance(i);
+//			 		arrays[i] = finail_data_sensor[i] ;
+//			 //if (i )
+//					tres = measureReflectance(i);
+//		 }
+		 //motor_back();
 		 motor_logic_moevemnt();
 	 }
     }
