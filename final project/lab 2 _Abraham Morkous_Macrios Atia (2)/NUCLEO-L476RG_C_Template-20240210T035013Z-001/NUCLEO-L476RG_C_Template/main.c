@@ -62,7 +62,7 @@ int measureReflectance(int sensor_index) {
 
         SENSOR_PORT->MODER &= ~(sensor_pin_moder_bits (sensor_index)); // Set SENSOR_PIN_i back to input mode
          int count = 0;
-        while ((SENSOR_PORT->IDR & (sensor_pin_odr_bits (sensor_index))) != 0 &&(count < 2000)) {
+        while ((SENSOR_PORT->IDR & (sensor_pin_odr_bits (sensor_index))) != 0 ) {
             count++;
 					
         }
@@ -95,24 +95,42 @@ int set = 0x1105;
 }
 
 void motor_left(){
+	GPIOA->ODR = GPIOA->ODR & ~(0x53);
 	GPIOA->ODR = GPIOA->ODR| 0x10; 
 }
 
 void motor_right(){
+GPIOA->ODR = GPIOA->ODR & ~(0x53);
 GPIOA->ODR = GPIOA->ODR| 0x01;
 }
 
 void motor_forward(){
+GPIOA->ODR = GPIOA->ODR & ~(0x53);
 GPIOA->ODR = GPIOA->ODR | 0x11;
 }
 
 void motor_stop(){
-GPIOA->ODR = GPIOA->ODR & (0x00);
+GPIOA->ODR = GPIOA->ODR & ~(0x53);
 }
 
 void motor_back(){
+GPIOA->ODR = GPIOA->ODR & ~(0x53);
 GPIOA->ODR = GPIOA->ODR| 0x42;
 }
+void motor_back_left(){
+GPIOA->ODR = GPIOA->ODR & ~(0x53);
+GPIOA->ODR = GPIOA->ODR| 0x40;
+}
+void motor_back_right(){
+GPIOA->ODR = GPIOA->ODR & ~(0x53);
+GPIOA->ODR = GPIOA->ODR| 0x02;
+}
+void motor_back_spin(){
+GPIOA->ODR = GPIOA->ODR & ~(0x53);
+GPIOA->ODR = GPIOA->ODR| 0x12;
+}
+
+#define DELAY_TIME 0
 /// every movemnt is after a stop 
 void motor_logic_moevemnt(){
 	int i = 0 ;
@@ -125,44 +143,66 @@ void motor_logic_moevemnt(){
 
 if (middle == 1 && right == 0 && left == 0 ){
 		motor_forward();
-		delayMicroseconds(500);
-		motor_stop();
+		//delayMicroseconds(200);
+		
 }else if  (middle == 1 && right == 1 && left == 0 ){
 		motor_right();
-		delayMicroseconds(500);
-		motor_stop();
-		motor_forward();
-		delayMicroseconds(500);
-		motor_stop();
+		//delayMicroseconds(500);
+		while(measureReflectance(1)>= threshold[1]){	
+				
+				//delayMicroseconds(500);
+				//motor_right();
+				//delayMicroseconds(500);
+				}
+		
+		
 }else if (middle == 1 && right == 0 && left == 1 ){
 		motor_left();
-		delayMicroseconds(500);
-		motor_stop();
-		motor_forward();
-		delayMicroseconds(500);
-		motor_stop();
+		//delayMicroseconds(500);
+		while(measureReflectance(1)>= threshold[1]){	
+				
+				//delayMicroseconds(500);
+				//motor_right();
+				//delayMicroseconds(500);
+				}
 }else if (middle == 0 && right == 1 && left == 0 ){
 		motor_right();
-		delayMicroseconds(500);
-		motor_stop();
+		//delayMicroseconds(500);
+		
 }else if (middle == 0 && right == 0 && left == 1 ){
 		motor_left();
-		delayMicroseconds(500);
-		motor_stop();
+		//delayMicroseconds(500);
+		
 }else if (middle == 1 && right == 1 && left == 1 ){
-		motor_forward();
-		delayMicroseconds(500);
-		motor_stop();
+	motor_forward();
+	while(measureReflectance(2)<= threshold[2]){	
+				
+				//delayMicroseconds(500);
+				//motor_right();
+				//delayMicroseconds(500);
+				}
+		
 }else {
 		//motor_back();
-		delayMicroseconds(400);
-		motor_stop();
-		motor_left();
-		delayMicroseconds(400);
-		motor_stop();
-		motor_right();
-		motor_stop();
+		//delayMicroseconds(400);
+				motor_back_spin();
+			while(measureReflectance(1) < threshold[1]){
+						if (measureReflectance(0) > threshold[0] || measureReflectance(2) > threshold[2]){
+						break;
+						}				
+				//delayMicroseconds(200);
+				//motor_back_right();
+				}
+			motor_stop();
+//		//motor_back();
+//		motor_back_left();
+//		delayMicroseconds(400);
+//		
+//		motor_back_right();
+//		delayMicroseconds(400);
+//		
 }
+
 }
 
 
@@ -202,6 +242,8 @@ int tres = 0 ;
 //		 }
 		 //motor_back();
 		 motor_logic_moevemnt();
+		 //motor_back_left();
+		 //motor_back_spin();
 	 }
     }
 }
